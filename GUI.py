@@ -1,6 +1,6 @@
 from user_login import *
 from tkinter import *
-from classes import get_api
+from classes import api
 
 
 # Keuze scherm van inloggen of inschrijven
@@ -14,12 +14,6 @@ def toonKeuzeScherm():
 def toonLoginFrame():
     keuzescherm.pack_forget()
     loginFrame.pack()
-
-
-def toonoverzichtfilms():
-    loginFrame.pack_forget()
-    overzichtfilms.pack()
-
 
 # Login functie voor het controleren van de ingevoerde waarde in de entry
 def login():
