@@ -2,6 +2,7 @@ from user_login import *
 from tkinter import *
 from classes import api
 
+api = api.api()
 
 # Keuze scherm van inloggen of inschrijven
 def toonKeuzeScherm():
@@ -14,6 +15,10 @@ def toonKeuzeScherm():
 def toonLoginFrame():
     keuzescherm.pack_forget()
     loginFrame.pack()
+
+def toonoverzichtfilms():
+    loginFrame.pack_forget()
+    overzichtfilms.pack()
 
 # Login functie voor het controleren van de ingevoerde waarde in de entry
 def login():
@@ -58,15 +63,13 @@ titel = Label(master=overzichtfilms,
 titel.pack()
 
 titels = Label(master=overzichtfilms,
-               text=get_api.tkinter_data.read(),
+               text=api.get_movies(),
                foreground='blue',
                font=('Helvetica', 8, 'bold italic'),
                width=40,
                height=10
                )
 titels.pack()
-
-get_api.tkinter_data.close()
 
 toonKeuzeScherm()
 root.mainloop()
