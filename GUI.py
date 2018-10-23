@@ -1,4 +1,4 @@
-from user_login import *
+from user_info import *
 from tkinter import *
 from classes import api
 
@@ -36,14 +36,15 @@ def toonoverzichtfilms():
 
 # Login functie voor het controleren van de ingevoerde waarde in de entry
 def login():
-    if login_field.get() == 'admin':
+    if username_infile(login_field.get()) == True:
         toonoverzichtfilms()
     else:
         print('Verkeerde gebruikersnaam!')
 
 
 def signup():
-    if signup_field.get() == 'sign':
+    if signup_field.get() != '':
+        user_signup(f'{signup_field.get()}\n')
         toonKeuzeScherm()
     else:
         print('Kan geen lege waarde ontvangen')
@@ -65,7 +66,6 @@ login_button.pack(side=RIGHT, padx=20, pady=20)
 signup_button = Button(master=keuzescherm, text='signup', command=toonSignUpframe)
 signup_button.pack(side=RIGHT, padx=20, pady=20)
 
-
 # Login frame
 login_frame = Frame(master=root)
 login_frame.pack(fill="both", expand=True)
@@ -76,8 +76,8 @@ login_field.pack(side=LEFT, padx=10, pady=20)
 login_field_accept = Button(master=login_frame, text='login', command=login)
 login_field_accept.pack(side=RIGHT, padx=10, pady=20)
 
-#signup frame
-signup_frame =Frame(master=root)
+# signup frame
+signup_frame = Frame(master=root)
 signup_frame.pack(fill="both", expand=True)
 
 signup_field = Entry(master=signup_frame)
@@ -92,7 +92,6 @@ overzicht_films.pack(fill="both", expand=True)
 
 titel = Label(master=overzicht_films,
               text='Welkom!',
-              foreground='blue',
               font=('Helvetica', 8, 'bold italic'),
               width=40,
               height=5
@@ -101,7 +100,6 @@ titel.pack()
 
 titels = Label(master=overzicht_films,
                text=api.get_movies(),
-               foreground='blue',
                font=('Helvetica', 8, 'bold italic'),
                width=40,
                height=10
