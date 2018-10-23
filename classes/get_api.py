@@ -12,19 +12,23 @@ sortMovies = 0
 apiUrl = f'http://api.filmtotaal.nl/filmsoptv.xml?apikey={apiKey}&dag={currentDay}&sorteer={sortMovies}'
 response = requests.get(apiUrl)
 
-print(response)
+
+
 
 with open('thuisbioscoop.xml', 'w', encoding= 'utf-8') as myXMLFile:
     myXMLFile.write(response.text)
 
 XMLbioscoop = xmltodict.parse(response.text)
 
+
 for i in XMLbioscoop['filmsoptv']['film']:
+    xml = open("data.xml", "a")
     titel = i['titel']
     jaar = i['jaar']
     zender = i['zender']
+    data = titel + jaar + zender
+    print(data)
+    with open("data.xml", "a") as xmlappend:
+        xmlappend.write(data + "\n")
 
-    timestamp = int(i['starttijd'])
-    starttijd = datetime.datetime.utcfromtimestamp(timestamp).strftime('%H:%M:%S')
-
-    print(titel, jaar, zender, starttijd)
+tkinter_data = open("data.xml", "r")
