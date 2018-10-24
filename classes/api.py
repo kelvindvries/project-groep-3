@@ -1,3 +1,6 @@
+* Author:   Dries Steenberghe
+* Example:  api().get_movies(), will return a list with that will be broadcasted today.
+
 class api:
 
     def __init__(self):
@@ -23,3 +26,4 @@ class api:
             movies_names.append(movie_data)
 
         return movies_names
+
