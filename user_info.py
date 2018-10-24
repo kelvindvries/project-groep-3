@@ -39,7 +39,10 @@ def username_infile(user_input):
         if elem_mod == user_input:
             print('overeenkomende username gevonden')
             return True
+
         else:
+            print(elem_mod + ':' + user_input)
+            print(readlines)
             print('geen overeenkomende username gevonden')
 
 
