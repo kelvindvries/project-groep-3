@@ -1,5 +1,5 @@
-* Author:   Dries Steenberghe
-* Example:  api().get_movies(), will return a list with that will be broadcasted today.
+# Author:   Dries Steenberghe
+# Example:  api().get_movies(), will return a list with that will be broadcasted today.
 
 class api:
 
