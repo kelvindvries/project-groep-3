@@ -92,17 +92,19 @@ overzicht_films.pack(fill="both", expand=True)
 
 titel = Label(master=overzicht_films,
               text='Welkom!',
-              font=('Helvetica', 8, 'bold italic'),
-              width=40,
-              height=5
+              font=('Helvetica', 25, 'bold italic'),
+              width=60,
+              height=1,
+              justify=LEFT
               )
 titel.pack()
 
 titels = Label(master=overzicht_films,
                text=api.get_movies(),
-               font=('Helvetica', 8, 'bold italic'),
+               font=('Helvetica', 16, 'bold italic'),
                width=60,
-               height=20
+               height=20,
+               justify=LEFT
                )
 titels.pack()
 
