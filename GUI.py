@@ -101,8 +101,8 @@ titel.pack()
 titels = Label(master=overzicht_films,
                text=api.get_movies(),
                font=('Helvetica', 8, 'bold italic'),
-               width=40,
-               height=10
+               width=60,
+               height=20
                )
 titels.pack()
 

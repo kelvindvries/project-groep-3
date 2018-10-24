@@ -1,5 +1,6 @@
 # Author:   Dries Steenberghe
-# Example:  api().get_movies(), will return a list with that will be broadcasted today.
+# Example:  api.get_movies(), will return a list with that will be broadcasted today.
+
 
 class api:
 
@@ -13,17 +14,28 @@ class api:
     def get_movies(self):
         import xmltodict
         import requests
+
+        api_data = open("api_data.xml", "w")
+        api_data.write("")
         movies_names = []
 
         response = requests.get(self.apiURL)
         xmltodict = xmltodict.parse(response.content)
 
+
+
         for movies in xmltodict['filmsoptv']['film']:
-            movie_data = []
-            movie_data.append(movies['titel'])
-            movie_data.append(movies['zender'])
-            movie_data.append(movies['jaar'])
-            movies_names.append(movie_data)
 
-        return movies_names
+            title = movies['titel']
+            channel = movies['zender']
+            year = movies['jaar']
+            r_string = title + " " + channel + " " + year + "\n"
+            api_data.write(r_string)
 
+        api_data.close()
+        return open("api_data.xml", "r").read()
+
+
+
+
+print(api().get_movies())
