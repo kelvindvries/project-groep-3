@@ -29,11 +29,11 @@ class api:
 
             title = movies['titel']
             channel = movies['zender']
-            star_time = movies['starttijd']
+            start_timestamp = movies['starttijd']
 
-            st = datetime.datetime.fromtimestamp(int(star_time)).strftime('%H:%M')
+            start_time = datetime.datetime.fromtimestamp(int(start_timestamp)).strftime('%H:%M')
 
-            r_string = title + " " + st + " " + channel + "\n"
+            r_string = title + " " + start_time + " " + channel + "\n"
             api_data.write(r_string)
 
         api_data.close()
