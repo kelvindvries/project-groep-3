@@ -112,6 +112,9 @@ titels = Label(master=overzicht_films,
                height=20,
                justify=LEFT
                )
+
+
+
 titels.pack()
 
 toonKeuzeScherm()

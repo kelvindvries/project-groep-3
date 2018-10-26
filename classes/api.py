@@ -14,6 +14,7 @@ class api:
     def get_movies(self):
         import xmltodict
         import requests
+        import datetime
 
         api_data = open("api_data.xml", "w")
         api_data.write("")
@@ -22,14 +23,17 @@ class api:
         response = requests.get(self.apiURL)
         xmltodict = xmltodict.parse(response.content)
 
-
+        print(xmltodict)
 
         for movies in xmltodict['filmsoptv']['film']:
 
             title = movies['titel']
             channel = movies['zender']
-            year = movies['jaar']
-            r_string = title + " " + year + " " + channel + "\n"
+            star_time = movies['starttijd']
+
+            st = datetime.datetime.fromtimestamp(int(star_time)).strftime('%H:%M')
+
+            r_string = title + " " + st + " " + channel + "\n"
             api_data.write(r_string)
 
         api_data.close()
