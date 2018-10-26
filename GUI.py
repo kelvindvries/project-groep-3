@@ -44,7 +44,7 @@ def login():
 
 def signup():
     if signup_field.get() != '':
-        user_signup(f'{signup_field.get()}\n')
+        user_signup(f'{signup_field.get()}')
         toonKeuzeScherm()
     else:
         print('Kan geen lege waarde ontvangen')
@@ -91,9 +91,9 @@ overzicht_films = Frame(master=root)
 overzicht_films.pack(fill="both", expand=True)
 
 titel = Label(master=overzicht_films,
-              text='Welkom!',
-              font=('Helvetica', 25, 'bold italic'),
-              width=60,
+              text='Films die vandaag op TV zijn:',
+              font=('Helvetica', 12, 'bold italic'),
+              width=30,
               height=1,
               justify=LEFT
               )
@@ -101,8 +101,8 @@ titel.pack()
 
 titels = Label(master=overzicht_films,
                text=api.get_movies(),
-               font=('Helvetica', 16, 'bold italic'),
-               width=60,
+               font=('Helvetica', 8, 'bold italic'),
+               width=50,
                height=20,
                justify=LEFT
                )

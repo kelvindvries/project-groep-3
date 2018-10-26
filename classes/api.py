@@ -29,7 +29,7 @@ class api:
             title = movies['titel']
             channel = movies['zender']
             year = movies['jaar']
-            r_string = title + " " + channel + " " + year + "\n"
+            r_string = title + " " + year + " " + channel + "\n"
             api_data.write(r_string)
 
         api_data.close()
