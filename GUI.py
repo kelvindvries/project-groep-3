@@ -5,6 +5,7 @@ from classes import api
 api = api.api()
 
 
+
 # Keuze scherm van inloggen of inschrijven
 def toonKeuzeScherm():
     signup_frame.pack_forget()
