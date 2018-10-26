@@ -73,6 +73,9 @@ login_frame.pack(fill="both", expand=True)
 login_field = Entry(master=login_frame)
 login_field.pack(side=LEFT, padx=10, pady=20)
 
+back_login = Button(master=login_frame, text='<', command=toonKeuzeScherm)
+back_login.pack(side=RIGHT, padx=5, pady=20)
+
 login_field_accept = Button(master=login_frame, text='login', command=login)
 login_field_accept.pack(side=RIGHT, padx=10, pady=20)
 
@@ -82,6 +85,9 @@ signup_frame.pack(fill="both", expand=True)
 
 signup_field = Entry(master=signup_frame)
 signup_field.pack(side=LEFT, padx=10, pady=20)
+
+go_back_button = Button(master=signup_frame, text='<', command=toonKeuzeScherm)
+go_back_button.pack(side=RIGHT, padx=5, pady=20)
 
 signup_field_accept = Button(master=signup_frame, text='sign up', command=signup)
 signup_field_accept.pack(side=RIGHT, padx=10, pady=20)

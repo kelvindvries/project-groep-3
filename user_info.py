@@ -1,3 +1,7 @@
+# Author: Kelvin de Vries
+# Example: This processes the value's given in the GUI in to a text file and checks entered value's from GUI
+
+
 import os
 
 bestand = 'user_information.txt'
@@ -35,9 +39,11 @@ def username_infile(user_input):
         if elem_mod == user_input:
             print('overeenkomende username gevonden')
             return True
-        else:
-            print('geen overeenkomende username gevonden')
 
+        else:
+            print(elem_mod + ':' + user_input)
+            print(readlines)
+            print('geen overeenkomende username gevonden')
 
 
 username_infile('kelvin')
