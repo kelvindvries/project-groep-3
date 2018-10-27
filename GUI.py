@@ -1,8 +1,13 @@
+# Author: Kelvin de Vries
+# Example: This is the GUI for the Program seen by the user
+
+
 from user_info import *
 from tkinter import *
 from classes import api
 
 api = api.api()
+
 
 # Keuze scherm van inloggen of inschrijven
 def toonKeuzeScherm():
@@ -49,8 +54,16 @@ def signup():
         print('Kan geen lege waarde ontvangen')
 
 
+def insert_item():
+    for movie in api.get_button_title():
+        print(movie)
+        listbox_movies.insert(END, movie)
+
+
 # hierin komt alle opmaak van de tkinter te staan
 root = Tk()
+root.geometry("400x400+30+30")
+
 
 # keuze scherm voor inloggen of inschrijven
 keuzescherm = Frame(master=root)
@@ -104,17 +117,9 @@ titel = Label(master=overzicht_films,
               )
 titel.pack()
 
-titels = Label(master=overzicht_films,
-               text=api.get_movies(),
-               font=('Helvetica', 8, 'bold italic'),
-               width=50,
-               height=20,
-               justify=LEFT
-               )
-
-
-
-titels.pack()
+listbox_movies = Listbox(master=overzicht_films, width=40, height=15)
+insert_item()
+listbox_movies.pack()
 
 toonKeuzeScherm()
 root.mainloop()

@@ -31,7 +31,6 @@ def user_signup(user_input):
 def username_infile(user_input):
     with open(bestand, 'r')as file:
         readlines = file.readlines()
-        print(readlines)
 
     for elem in readlines:
         elem_mod = elem.strip()
@@ -41,8 +40,6 @@ def username_infile(user_input):
             return True
 
         else:
-            print(elem_mod + ':' + user_input)
-            print(readlines)
             print('geen overeenkomende username gevonden')
 
 
