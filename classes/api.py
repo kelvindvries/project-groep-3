@@ -1,4 +1,3 @@
-# Author:   Dries Steenberghe, Kelvin de Vries
 # Example:  api.get_movies(), will return a list with that will be broadcasted today.
 
 
