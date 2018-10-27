@@ -1,4 +1,4 @@
-# Author:   Dries Steenberghe
+# Author:   Dries Steenberghe, Kelvin de Vries
 # Example:  api.get_movies(), will return a list with that will be broadcasted today.
 
 
@@ -6,6 +6,7 @@ class api:
 
     def __init__(self):
         import datetime
+
         sortMovies = 0
         apiKey = '0z6a54un2dfh9bovl5v9w2b01ajccy6t'
         currentDay = datetime.datetime.today().strftime('%d-%m-%Y')
@@ -22,10 +23,7 @@ class api:
         response = requests.get(self.apiURL)
         xmltodict = xmltodict.parse(response.content)
 
-        print(xmltodict)
-
         for movies in xmltodict['filmsoptv']['film']:
-
             title = movies['titel']
             channel = movies['zender']
             start_timestamp = movies['starttijd']
@@ -38,7 +36,6 @@ class api:
         api_data.close()
         return open("api_data.xml", "r").read()
 
-
     def get_button_title(self):
         import xmltodict
         import requests
@@ -49,12 +46,10 @@ class api:
         response = requests.get(self.apiURL)
         xmltodict = xmltodict.parse(response.content)
 
-
+        movie_dict = []
         for movies in xmltodict['filmsoptv']['film']:
             title = movies['titel']
-            api_data.write(title + "\n")
+            movie_dict.append(title)
 
         api_data.close()
-        return open("api_data.xml", "r").read()
-
-print(api().get_button_title())
+        return movie_dict
