@@ -14,28 +14,47 @@ class api:
     def get_movies(self):
         import xmltodict
         import requests
+        import datetime
 
         api_data = open("api_data.xml", "w")
         api_data.write("")
-        movies_names = []
 
         response = requests.get(self.apiURL)
         xmltodict = xmltodict.parse(response.content)
 
-
+        print(xmltodict)
 
         for movies in xmltodict['filmsoptv']['film']:
 
             title = movies['titel']
             channel = movies['zender']
-            year = movies['jaar']
-            r_string = title + " " + channel + " " + year + "\n"
+            start_timestamp = movies['starttijd']
+
+            start_time = datetime.datetime.fromtimestamp(int(start_timestamp)).strftime('%H:%M')
+
+            r_string = title + " " + start_time + " " + channel + "\n"
             api_data.write(r_string)
 
         api_data.close()
         return open("api_data.xml", "r").read()
 
 
+    def get_button_title(self):
+        import xmltodict
+        import requests
+
+        api_data = open("api_data.xml", "w")
+        api_data.write("")
+
+        response = requests.get(self.apiURL)
+        xmltodict = xmltodict.parse(response.content)
 
 
-print(api().get_movies())
+        for movies in xmltodict['filmsoptv']['film']:
+            title = movies['titel']
+            api_data.write(title + "\n")
+
+        api_data.close()
+        return open("api_data.xml", "r").read()
+
+print(api().get_button_title())
