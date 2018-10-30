@@ -73,7 +73,7 @@ root = Tk()
 root.geometry("640x400")
 root.resizable(0,0)
 
-
+# _________________________________________________________________________________________________________
 # keuze scherm voor inloggen of inschrijven
 keuzescherm = Frame(master=root)
 keuzescherm.pack(fill="both", expand=True)
@@ -87,6 +87,7 @@ login_button.pack(side=RIGHT, padx=20, pady=20)
 signup_button = Button(master=keuzescherm, text='signup', command=toonSignUpframe)
 signup_button.pack(side=RIGHT, padx=20, pady=20)
 
+# _________________________________________________________________________________________________________
 # Login frame
 login_frame = Frame(master=root)
 login_frame.pack(fill="both", expand=True)
@@ -100,6 +101,7 @@ back_login.pack(side=RIGHT, padx=5, pady=20)
 login_field_accept = Button(master=login_frame, text='login', command=login)
 login_field_accept.pack(side=RIGHT, padx=10, pady=20)
 
+# _________________________________________________________________________________________________________
 # signup frame
 signup_frame = Frame(master=root)
 signup_frame.pack(fill="both", expand=True)
@@ -113,6 +115,7 @@ go_back_button.pack(side=RIGHT, padx=5, pady=20)
 signup_field_accept = Button(master=signup_frame, text='sign up', command=signup)
 signup_field_accept.pack(side=RIGHT, padx=10, pady=20)
 
+# _________________________________________________________________________________________________________
 # Overzicht van alle films
 overzicht_films = Frame(master=root)
 overzicht_films.pack_propagate(0)
@@ -125,15 +128,22 @@ titel = Label(master=overzicht_films,
               height=1,
               justify=LEFT
               )
-titel.grid(row=0, column=3)
+
 
 listbox_movies = Listbox(master=overzicht_films, width=40, height=15)
 insert_item()
 listbox_movies.bind('<<ListboxSelect>>', CurSelect)
-listbox_movies.grid(row=1, column=1, columnspan=2, rowspan=3)
 
 movie_label = Label(master=overzicht_films, relief=SUNKEN)
-movie_label.grid(row=1, column=4, rowspan=3)
+movie_synops = Label(master=overzicht_films, relief=SUNKEN, text='synopsis')
+movie_start = Label(master=overzicht_films, relief=SUNKEN, text='starttijd')
+
+
+titel.grid(row=0, column=2)
+listbox_movies.grid(row=0, column=0, rowspan=2, columnspan=2)
+movie_start.grid(row=3, column=2)
+movie_synops.grid(row=2, column=2)
+movie_label.grid(row=1, column=2)
 
 toonKeuzeScherm()
 root.mainloop()
