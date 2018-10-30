@@ -130,7 +130,7 @@ movie_label.grid(row=1, column=4)
 listbox_movies = Listbox(master=overzicht_films, width=40, height=15)
 insert_item()
 listbox_movies.bind('<<ListboxSelect>>', CurSelect)
-listbox_movies.grid(row=1, column=1 columnspan=2, rowspan=3)
+listbox_movies.grid(row=1, column=1, columnspan=2, rowspan=3)
 
 toonKeuzeScherm()
 root.mainloop()
