@@ -40,7 +40,7 @@ def toonoverzichtfilms():
 
 # Login functie voor het controleren van de ingevoerde waarde in de entry
 def login():
-    if username_infile(login_field.get()) == True:
+    if username_infile(login_field.get()):
         toonoverzichtfilms()
     else:
         print('Verkeerde gebruikersnaam!')
@@ -60,14 +60,17 @@ def insert_item():
         listbox_movies.insert(END, movie)
 
 
-def CurSelect():
-
+def CurSelect(event):
+    widget = event.widget
+    selection = widget.curselection()
+    picked = widget.get(selection[0])
+    print(picked)
+    return picked
 
 
 # hierin komt alle opmaak van de tkinter te staan
 root = Tk()
-root.geometry("400x400+30+30")
-
+root.geometry("640x400")
 
 # keuze scherm voor inloggen of inschrijven
 keuzescherm = Frame(master=root)
@@ -119,11 +122,15 @@ titel = Label(master=overzicht_films,
               height=1,
               justify=LEFT
               )
-titel.pack()
+titel.grid(row=0, column=3)
+
+movie_label = Label(master=overzicht_films, text=CurSelect)
+movie_label.grid(row=1, column=4)
 
 listbox_movies = Listbox(master=overzicht_films, width=40, height=15)
 insert_item()
-listbox_movies.pack()
+listbox_movies.bind('<<ListboxSelect>>', CurSelect)
+listbox_movies.grid(row=1, column=1 columnspan=2, rowspan=3)
 
 toonKeuzeScherm()
 root.mainloop()
