@@ -55,9 +55,13 @@ def signup():
 
 
 def insert_item():
-    for movie in api.get_button_title():
+    for movie in api.get_title():
         print(movie)
         listbox_movies.insert(END, movie)
+
+
+def CurSelect():
+
 
 
 # hierin komt alle opmaak van de tkinter te staan

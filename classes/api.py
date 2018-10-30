@@ -35,7 +35,7 @@ class api:
         api_data.close()
         return open("api_data.xml", "r").read()
 
-    def get_button_title(self):
+    def get_title(self):
         import xmltodict
         import requests
 
