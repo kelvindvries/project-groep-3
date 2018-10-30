@@ -31,9 +31,11 @@ def user_signup(user_input):
 def username_infile(user_input):
     with open(bestand, 'r')as file:
         readlines = file.readlines()
+        print(readlines)
 
     for elem in readlines:
         elem_mod = elem.strip()
+        print(elem_mod)
 
         if elem_mod == user_input:
             print('overeenkomende username gevonden')

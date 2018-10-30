@@ -48,7 +48,7 @@ def login():
 
 def signup():
     if signup_field.get() != '':
-        user_signup(f'{signup_field.get()}')
+        user_signup(f'{signup_field.get()}\n')
         toonKeuzeScherm()
     else:
         print('Kan geen lege waarde ontvangen')
@@ -64,7 +64,6 @@ def CurSelect(event):
     widget = event.widget
     selection = widget.curselection()
     picked = widget.get(selection[0])
-    print(picked)
     return picked
 
 
@@ -124,13 +123,13 @@ titel = Label(master=overzicht_films,
               )
 titel.grid(row=0, column=3)
 
-movie_label = Label(master=overzicht_films, text=CurSelect)
-movie_label.grid(row=1, column=4)
-
 listbox_movies = Listbox(master=overzicht_films, width=40, height=15)
 insert_item()
 listbox_movies.bind('<<ListboxSelect>>', CurSelect)
 listbox_movies.grid(row=1, column=1, columnspan=2, rowspan=3)
+
+movie_label = Label(master=overzicht_films, bg='Grey')
+movie_label.grid(row=1, column=4, columnspan=2, rowspan=3)
 
 toonKeuzeScherm()
 root.mainloop()
