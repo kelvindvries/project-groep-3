@@ -43,6 +43,3 @@ def username_infile(user_input):
 
         else:
             print('geen overeenkomende username gevonden')
-
-
-username_infile('kelvin')
