@@ -71,6 +71,8 @@ def CurSelect(event):
 # hierin komt alle opmaak van de tkinter te staan
 root = Tk()
 root.geometry("640x400")
+root.resizable(0,0)
+
 
 # keuze scherm voor inloggen of inschrijven
 keuzescherm = Frame(master=root)
@@ -113,6 +115,7 @@ signup_field_accept.pack(side=RIGHT, padx=10, pady=20)
 
 # Overzicht van alle films
 overzicht_films = Frame(master=root)
+overzicht_films.pack_propagate(0)
 overzicht_films.pack(fill="both", expand=True)
 
 titel = Label(master=overzicht_films,
