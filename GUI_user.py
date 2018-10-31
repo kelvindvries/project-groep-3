@@ -1,4 +1,3 @@
-# Author: Kelvin de Vries
 # Example: This is the GUI for the Program seen by the user
 
 
