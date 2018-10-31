@@ -33,7 +33,6 @@ def toonProviderChoiceScreen():
     home_screen.pack_forget()
     login_provider.pack_forget()
     signup_provider.pack_forget()
-
     provider_choice_screen.pack()
     print('provider home')
 
@@ -42,6 +41,11 @@ def toonLoginFrame():
     keuzescherm.pack_forget()
     login_frame.pack()
     print('login scherm user')
+
+
+def toonproviderlogin():
+    provider_choice_screen.pack_forget()
+    login_provider.pack()
 
 
 def toonSignUpframe():
@@ -62,6 +66,7 @@ def toonoverzichtfilms():
     print('film overzicht user')
 
 
+# Logic
 def login_user():
     name_email = f'{login_field.get()}{login_field_email.get()}'
     if username_infile(name_email):
@@ -75,7 +80,7 @@ def login_user():
 def provider_login():
     p_name_email = f'{p_login_entry_name}{p_login_entry_email}'
     if username_provider_infile(p_name_email):
-        currentprovider = username_provider_infile(login_field.get())
+        currentprovider = username_provider_infile(provider_name.get())
         print(currentprovider)
         toonoverzichtfilms()
     else:
@@ -90,7 +95,11 @@ def signup_user():
         print('Kan geen lege waarde verwerken')
 
 
-# def login_provider():
+def provider_signup():
+    if provider_name and provider_email != '':
+        handle_provider_signup(f'{provider_name.get()}{provider_email.get()}')
+    else:
+        print('kan geen waardes doorvoeren')
 
 
 def insert_title():
@@ -233,7 +242,7 @@ reserve_btn.grid(row=4, column=2)
 provider_choice_screen = Frame(master=root)
 provider_choice_screen.pack(fill='both', expand=True)
 
-btn_login = Button(master=provider_choice_screen, text='Login')
+btn_login = Button(master=provider_choice_screen, text='Login', command=toonproviderlogin)
 btn_signup = Button(master=provider_choice_screen, text='Sign Up', command=toonprovidersignup)
 
 btn_login.grid()
@@ -256,10 +265,10 @@ back_login_provider = Button(master=login_provider, text='<', command=toonProvid
 login_label_name.grid(row=0, column=0)
 p_login_entry_name.grid(row=0, column=1)
 login_label_email.grid(row=1, column=0)
-p_login_entry_name.grid(row=1, column=1)
+p_login_entry_email.grid(row=1, column=1)
 
-back_login.grid(row=1, column=2)
-login_field_accept.grid(row=0, column=2)
+back_login_provider.grid(row=1, column=2)
+login_accept.grid(row=0, column=2)
 
 # _________________________________________________________________________________________________________
 # Signup voor aanbieder
@@ -272,8 +281,8 @@ provider_name = Entry(master=signup_provider)
 label_email = Label(master=signup_provider, text='Email')
 provider_email = Entry(master=signup_provider)
 
-back_button = Button(master=signup_provider, text='<')
-signup_accept = Button(master=signup_provider, text='sign up')
+back_button = Button(master=signup_provider, text='<', command=toonProviderChoiceScreen)
+signup_accept = Button(master=signup_provider, text='sign up', command=provider_signup)
 
 # Layout
 label_name.grid(row=0, column=0)
