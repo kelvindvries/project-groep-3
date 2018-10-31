@@ -1,16 +1,26 @@
 # Example: This is the GUI for the Program seen by the user
-
-from user_info import *
+from handle_info import *
 from tkinter import *
 from API import *
 import csv
 
 
-# Keuze scherm van inloggen of inschrijven
-def toonKeuzeScherm():
+# Homescreen
+def toonhomescreen():
     signup_frame.pack_forget()
     login_frame.pack_forget()
+    keuzescherm.pack_forget()
     overzicht_films.pack_forget()
+
+    home_screen.pack()
+
+
+# Keuze scherm van inloggen of inschrijven
+def toonKeuzeScherm():
+    home_screen.pack_forget()
+    signup_frame.pack_forget()
+    login_frame.pack_forget()
+
     keuzescherm.pack()
     print('keuze scherm')
 
@@ -37,7 +47,10 @@ def toonoverzichtfilms():
 
 # Login functie voor het controleren van de ingevoerde waarde in de entry
 def login():
-    if username_infile(login_field.get()):
+    name_email = f'{login_field.get()}{login_field_email.get()}'
+    if username_infile(name_email):
+        currentuser = username_infile(login_field.get())
+        print(currentuser)
         toonoverzichtfilms()
     else:
         print('Verkeerde gebruikersnaam!')
@@ -45,7 +58,7 @@ def login():
 
 def signup():
     if signup_field.get() != '':
-        user_signup(f'{signup_field.get()}\n')
+        user_signup(f'{signup_field.get()}{signup_field_email.get()}\n')
         toonKeuzeScherm()
     else:
         print('Kan geen lege waarde ontvangen')
@@ -85,6 +98,17 @@ root.geometry("768x432")
 root.resizable(0, 0)
 
 # _________________________________________________________________________________________________________
+# Homescreen met de keuze tussen aanbieder en gebruiker
+home_screen = Frame(master=root)
+home_screen.pack()
+
+user_btn = Button(master=home_screen, text='Inloggen als Gebruiker', width=40, command=toonKeuzeScherm)
+aanbieder_btn = Button(master=home_screen, text='Inloggen als Aanbieder', width=40)
+
+user_btn.pack()
+aanbieder_btn.pack()
+
+# _______________________________Gebruiker_________________________________________________________________
 # keuze scherm voor inloggen of inschrijven
 keuzescherm = Frame(master=root)
 keuzescherm.pack(fill="both", expand=True)
@@ -98,33 +122,51 @@ login_button.pack(side=RIGHT, padx=20, pady=20)
 signup_button = Button(master=keuzescherm, text='signup', command=toonSignUpframe)
 signup_button.pack(side=RIGHT, padx=20, pady=20)
 
+go_home_screen = Button(master=keuzescherm, text='<', command=toonhomescreen)
+go_home_screen.pack(side=BOTTOM)
+
 # _________________________________________________________________________________________________________
 # Login frame
 login_frame = Frame(master=root)
 login_frame.pack(fill="both", expand=True)
 
+login_name = Label(master=login_frame, text='Naam')
 login_field = Entry(master=login_frame)
-login_field.pack(side=LEFT, padx=10, pady=20)
-
-back_login = Button(master=login_frame, text='<', command=toonKeuzeScherm)
-back_login.pack(side=RIGHT, padx=5, pady=20)
+login_email = Label(master=login_frame, text='Email')
+login_field_email = Entry(master=login_frame)
 
 login_field_accept = Button(master=login_frame, text='login', command=login)
-login_field_accept.pack(side=RIGHT, padx=10, pady=20)
+back_login = Button(master=login_frame, text='<', command=toonKeuzeScherm)
+
+# layout
+login_name.grid(row=0, column=0)
+login_field.grid(row=0, column=1)
+login_email.grid(row=1, column=0)
+login_field_email.grid(row=1, column=1)
+
+back_login.grid(row=1, column=2)
+login_field_accept.grid(row=0, column=2)
 
 # _________________________________________________________________________________________________________
 # signup frame
 signup_frame = Frame(master=root)
 signup_frame.pack(fill="both", expand=True)
 
+name_user = Label(master=signup_frame, text='Naam')
 signup_field = Entry(master=signup_frame)
-signup_field.pack(side=LEFT, padx=10, pady=20)
+email_user = Label(master=signup_frame, text='Email')
+signup_field_email = Entry(master=signup_frame)
 
 go_back_button = Button(master=signup_frame, text='<', command=toonKeuzeScherm)
-go_back_button.pack(side=RIGHT, padx=5, pady=20)
-
 signup_field_accept = Button(master=signup_frame, text='sign up', command=signup)
-signup_field_accept.pack(side=RIGHT, padx=10, pady=20)
+
+# Layout
+name_user.grid(row=0, column=0)
+signup_field.grid(row=0, column=1)
+email_user.grid(row=1, column=0)
+signup_field_email.grid(row=1, column=1)
+go_back_button.grid(row=1, column=2)
+signup_field_accept.grid(row=0, column=2)
 
 # _________________________________________________________________________________________________________
 # Overzicht van alle films
@@ -149,7 +191,7 @@ movie_start = Label(master=overzicht_films)
 reserve_btn = Button(master=overzicht_films, text='Reserveren')
 
 # place
-titel.grid(row=0,column=0, columnspan=2)
+titel.grid(row=0, column=0, columnspan=2)
 listbox_movies.grid(row=1, column=0, rowspan=3, columnspan=2)
 
 movie_name.grid(row=0, column=2)
@@ -157,5 +199,13 @@ movie_start.grid(row=0, column=3)
 movie_synops.grid(row=1, column=2, rowspan=3, columnspan=2)
 reserve_btn.grid(row=4, column=2)
 
-toonKeuzeScherm()
+# ___________________________________________Aanbieder GUI_________________________________________________
+# Login , signup voor aanbieder
+
+# Menu, Toon gereserveerde films, toon overzicht films, terug naar homescreen
+
+# Overzicht Films, film reserveren
+
+
+toonhomescreen()
 root.mainloop()
