@@ -1,11 +1,9 @@
 # Example: This is the GUI for the Program seen by the user
 
-
 from user_info import *
 from tkinter import *
-from classes import api
-
-api = api.api()
+from API import *
+import csv
 
 
 # Keuze scherm van inloggen of inschrijven
@@ -53,24 +51,38 @@ def signup():
         print('Kan geen lege waarde ontvangen')
 
 
-def insert_item():
-    for movie in api.get_title():
-        print(movie)
-        listbox_movies.insert(END, movie)
+def insert_title():
+    with open(bestand, "r") as f:
+        infile = csv.reader(f)
+        for row in infile:
+            text = row[0]
+            title = text.split(";")[0]
+            listbox_movies.insert(END, title)
 
 
 def CurSelect(event):
     widget = event.widget
     selection = widget.curselection()
     picked = widget.get(selection[0])
+
+    with open(bestand, "r") as f:
+        infile = csv.reader(f, delimiter=";")
+        for elem in infile:
+            '+'.join(elem)
+            text = elem
+            if picked in elem:
+                synops = text[1]
+                starttime = text[2]
+
     movie_label.config(text=str(picked))
-    return picked
+    movie_synops.config(text=str(synops))
+    movie_start.config(text=str(starttime))
 
 
 # hierin komt alle opmaak van de tkinter te staan
 root = Tk()
 root.geometry("640x400")
-root.resizable(0,0)
+root.resizable(0, 0)
 
 # _________________________________________________________________________________________________________
 # keuze scherm voor inloggen of inschrijven
@@ -128,21 +140,19 @@ titel = Label(master=overzicht_films,
               justify=LEFT
               )
 
-
 listbox_movies = Listbox(master=overzicht_films, width=40, height=15)
-insert_item()
+insert_title()
 listbox_movies.bind('<<ListboxSelect>>', CurSelect)
 
 movie_label = Label(master=overzicht_films, relief=SUNKEN)
-movie_synops = Label(master=overzicht_films, relief=SUNKEN, text='synopsis')
+movie_synops = Label(master=overzicht_films, relief=SUNKEN, text='synopsis', wraplengt=200)
 movie_start = Label(master=overzicht_films, relief=SUNKEN, text='starttijd')
 
-
 titel.grid(row=0, column=2)
-listbox_movies.grid(row=0, column=0, rowspan=2, columnspan=2)
-movie_start.grid(row=3, column=2)
-movie_synops.grid(row=2, column=2)
+listbox_movies.grid(row=1, column=0, rowspan=2, columnspan=2)
+movie_synops.grid(row=2, column=2, rowspan=2)
 movie_label.grid(row=1, column=2)
+movie_start.grid(row=1, column=3)
 
 toonKeuzeScherm()
 root.mainloop()
