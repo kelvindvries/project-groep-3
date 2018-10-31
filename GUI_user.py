@@ -74,14 +74,14 @@ def CurSelect(event):
                 synops = text[1]
                 starttime = text[2]
 
-    movie_label.config(text=str(picked))
+    movie_name.config(text=str(picked))
     movie_synops.config(text=str(synops))
     movie_start.config(text=str(starttime))
 
 
 # hierin komt alle opmaak van de tkinter te staan
 root = Tk()
-root.geometry("640x400")
+root.geometry("768x432")
 root.resizable(0, 0)
 
 # _________________________________________________________________________________________________________
@@ -135,24 +135,27 @@ overzicht_films.pack(fill="both", expand=True)
 titel = Label(master=overzicht_films,
               text='Films die vandaag op TV zijn:',
               font=('Helvetica', 12, 'bold italic'),
-              width=30,
-              height=1,
-              justify=LEFT
+              width=40
               )
 
-listbox_movies = Listbox(master=overzicht_films, width=40, height=15)
+listbox_movies = Listbox(master=overzicht_films, width=40)
 insert_title()
 listbox_movies.bind('<<ListboxSelect>>', CurSelect)
 
-movie_label = Label(master=overzicht_films, relief=SUNKEN)
-movie_synops = Label(master=overzicht_films, relief=SUNKEN, text='synopsis', wraplengt=200)
-movie_start = Label(master=overzicht_films, relief=SUNKEN, text='starttijd')
+movie_name = Label(master=overzicht_films)
+movie_synops = Label(master=overzicht_films, width=50, wraplengt=300, justify=LEFT)
+movie_start = Label(master=overzicht_films)
 
-titel.grid(row=0, column=2)
-listbox_movies.grid(row=1, column=0, rowspan=2, columnspan=2)
-movie_synops.grid(row=2, column=2, rowspan=2)
-movie_label.grid(row=1, column=2)
-movie_start.grid(row=1, column=3)
+reserve_btn = Button(master=overzicht_films, text='Reserveren')
+
+# place
+titel.grid(row=0,column=0, columnspan=2)
+listbox_movies.grid(row=1, column=0, rowspan=3, columnspan=2)
+
+movie_name.grid(row=0, column=2)
+movie_start.grid(row=0, column=3)
+movie_synops.grid(row=1, column=2, rowspan=3, columnspan=2)
+reserve_btn.grid(row=4, column=2)
 
 toonKeuzeScherm()
 root.mainloop()
