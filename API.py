@@ -26,3 +26,4 @@ def get_movie_data():
             starttijd = datetime.datetime.utcfromtimestamp(int(ts)).strftime('%H:%M')
 
             writer.writerow((title, synop, starttijd))
+

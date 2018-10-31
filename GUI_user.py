@@ -5,14 +5,18 @@ from API import *
 import csv
 
 
-# Homescreen
+# Homescreen, hier is de keus tussen aanbieder of gebruiker
 def toonhomescreen():
     signup_frame.pack_forget()
+    provider_choice_screen.pack_forget()
+    login_provider.pack_forget()
+    signup_provider.pack_forget()
     login_frame.pack_forget()
     keuzescherm.pack_forget()
     overzicht_films.pack_forget()
 
     home_screen.pack()
+    print('home aanbieder / user')
 
 
 # Keuze scherm van inloggen of inschrijven
@@ -22,31 +26,43 @@ def toonKeuzeScherm():
     login_frame.pack_forget()
 
     keuzescherm.pack()
-    print('keuze scherm')
+    print('keuze scherm user')
 
 
-# LoginFrame
+def toonProviderChoiceScreen():
+    home_screen.pack_forget()
+    login_provider.pack_forget()
+    signup_provider.pack_forget()
+
+    provider_choice_screen.pack()
+    print('provider home')
+
+
 def toonLoginFrame():
     keuzescherm.pack_forget()
     login_frame.pack()
-    print('login scherm')
+    print('login scherm user')
 
 
 def toonSignUpframe():
     keuzescherm.pack_forget()
     signup_frame.pack()
-    print('sign up scherm')
+    print('sign up scherm user')
 
 
-# overzicht van de films
+def toonprovidersignup():
+    provider_choice_screen.pack_forget()
+    signup_provider.pack()
+    print("sign up provider")
+
+
 def toonoverzichtfilms():
     login_frame.pack_forget()
     overzicht_films.pack()
-    print('film overzicht')
+    print('film overzicht user')
 
 
-# Login functie voor het controleren van de ingevoerde waarde in de entry
-def login():
+def login_user():
     name_email = f'{login_field.get()}{login_field_email.get()}'
     if username_infile(name_email):
         currentuser = username_infile(login_field.get())
@@ -56,12 +72,25 @@ def login():
         print('Verkeerde gebruikersnaam!')
 
 
-def signup():
-    if signup_field.get() != '':
-        user_signup(f'{signup_field.get()}{signup_field_email.get()}\n')
+def provider_login():
+    p_name_email = f'{p_login_entry_name}{p_login_entry_email}'
+    if username_provider_infile(p_name_email):
+        currentprovider = username_provider_infile(login_field.get())
+        print(currentprovider)
+        toonoverzichtfilms()
+    else:
+        print('Verkeerde gebruikersnaam!')
+
+
+def signup_user():
+    if signup_field.get() != '' and signup_field_email != '':
+        handle_user_signup(f'{signup_field.get()}{signup_field_email.get()}\n')
         toonKeuzeScherm()
     else:
-        print('Kan geen lege waarde ontvangen')
+        print('Kan geen lege waarde verwerken')
+
+
+# def login_provider():
 
 
 def insert_title():
@@ -103,7 +132,7 @@ home_screen = Frame(master=root)
 home_screen.pack()
 
 user_btn = Button(master=home_screen, text='Inloggen als Gebruiker', width=40, command=toonKeuzeScherm)
-aanbieder_btn = Button(master=home_screen, text='Inloggen als Aanbieder', width=40)
+aanbieder_btn = Button(master=home_screen, text='Inloggen als Aanbieder', width=40, command=toonProviderChoiceScreen)
 
 user_btn.pack()
 aanbieder_btn.pack()
@@ -135,7 +164,7 @@ login_field = Entry(master=login_frame)
 login_email = Label(master=login_frame, text='Email')
 login_field_email = Entry(master=login_frame)
 
-login_field_accept = Button(master=login_frame, text='login', command=login)
+login_field_accept = Button(master=login_frame, text='login', command=login_user)
 back_login = Button(master=login_frame, text='<', command=toonKeuzeScherm)
 
 # layout
@@ -158,7 +187,7 @@ email_user = Label(master=signup_frame, text='Email')
 signup_field_email = Entry(master=signup_frame)
 
 go_back_button = Button(master=signup_frame, text='<', command=toonKeuzeScherm)
-signup_field_accept = Button(master=signup_frame, text='sign up', command=signup)
+signup_field_accept = Button(master=signup_frame, text='sign up', command=signup_user)
 
 # Layout
 name_user.grid(row=0, column=0)
@@ -200,10 +229,66 @@ movie_synops.grid(row=1, column=2, rowspan=3, columnspan=2)
 reserve_btn.grid(row=4, column=2)
 
 # ___________________________________________Aanbieder GUI_________________________________________________
-# Login , signup voor aanbieder
+# Keuze scherm aanbieder
+provider_choice_screen = Frame(master=root)
+provider_choice_screen.pack(fill='both', expand=True)
 
+btn_login = Button(master=provider_choice_screen, text='Login')
+btn_signup = Button(master=provider_choice_screen, text='Sign Up', command=toonprovidersignup)
+
+btn_login.grid()
+btn_signup.grid()
+
+# _________________________________________________________________________________________________________
+# Login voor aanbieder
+login_provider = Frame(master=root)
+login_provider.pack(fill="both", expand=True)
+
+login_label_name = Label(master=login_provider, text='Naam')
+p_login_entry_name = Entry(master=login_provider)
+login_label_email = Label(master=login_provider, text='Email')
+p_login_entry_email = Entry(master=login_provider)
+
+login_accept = Button(master=login_provider, text='login', command=provider_login)
+back_login_provider = Button(master=login_provider, text='<', command=toonProviderChoiceScreen)
+
+# layout
+login_label_name.grid(row=0, column=0)
+p_login_entry_name.grid(row=0, column=1)
+login_label_email.grid(row=1, column=0)
+p_login_entry_name.grid(row=1, column=1)
+
+back_login.grid(row=1, column=2)
+login_field_accept.grid(row=0, column=2)
+
+# _________________________________________________________________________________________________________
+# Signup voor aanbieder
+
+signup_provider = Frame(master=root)
+signup_provider.pack(fill='both', expand=True)
+
+label_name = Label(master=signup_provider, text='Naam')
+provider_name = Entry(master=signup_provider)
+label_email = Label(master=signup_provider, text='Email')
+provider_email = Entry(master=signup_provider)
+
+back_button = Button(master=signup_provider, text='<')
+signup_accept = Button(master=signup_provider, text='sign up')
+
+# Layout
+label_name.grid(row=0, column=0)
+provider_name.grid(row=0, column=1)
+label_email.grid(row=1, column=0)
+provider_email.grid(row=1, column=1)
+
+back_button.grid(row=1, column=2)
+signup_accept.grid(row=0, column=2)
+
+# _________________________________________________________________________________________________________
 # Menu, Toon gereserveerde films, toon overzicht films, terug naar homescreen
 
+
+# _________________________________________________________________________________________________________
 # Overzicht Films, film reserveren
 
 
