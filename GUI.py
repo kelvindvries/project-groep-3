@@ -39,6 +39,8 @@ def toonProviderChoiceScreen():
     home_screen.pack_forget()
     login_provider.pack_forget()
     signup_provider.pack_forget()
+    p_menu.pack_forget()
+
     provider_choice_screen.pack()
     print('provider home')
 
@@ -80,6 +82,9 @@ def toonticket():
 
 def toon_p_overzicht():
     p_menu.pack_forget()
+    login_provider.pack_forget()
+    signup_provider.pack_forget()
+
     p_overzicht_films.pack()
     print('provider overzicht')
 
@@ -87,6 +92,8 @@ def toon_p_overzicht():
 def toon_p_menu():
     login_provider.pack_forget()
     signup_provider.pack_forget()
+    p_overzicht_films.pack_forget()
+
     p_menu.pack()
 
 
@@ -161,9 +168,11 @@ def CurSelect(event):
 
     movie_name.config(text=str(picked))
     movie_synops.config(text=str(synops))
-    p_movie_synops.config(text=str(synops))
     movie_start.config(text=str(starttime))
-    p_movie_start.config(text=str(synops))
+
+    p_movie_name.config(text=str(picked))
+    p_movie_synops.config(text=str(synops))
+    p_movie_start.config(text=str(starttime))
 
 def reservefilm():
     curuser = login_user()
@@ -391,11 +400,9 @@ p_menu = Frame(master=root)
 p_menu.pack(fill='both', expand=True)
 
 btn_toonoverzicht = Button(master=p_menu, text='Toon overzicht films', command=toon_p_overzicht)
-btn_toongereserveerdefilm = Button(master=p_menu, text='Mijn Films')
-btn_terug = Button(master=p_menu, text='Terug', command=toonProviderChoiceScreen())
+btn_terug = Button(master=p_menu, text='Terug', command=toonProviderChoiceScreen)
 
 btn_toonoverzicht.grid()
-btn_toongereserveerdefilm.grid()
 btn_terug.grid()
 
 # _________________________________________________________________________________________________________
@@ -413,7 +420,7 @@ listbox_movies = Listbox(master=p_overzicht_films, width=40)
 p_insert_title()
 listbox_movies.bind('<<ListboxSelect>>', CurSelect)
 
-movie_name = Label(master=p_overzicht_films)
+p_movie_name = Label(master=p_overzicht_films)
 p_movie_synops = Label(master=p_overzicht_films, width=50, wraplengt=300, justify=LEFT)
 p_movie_start = Label(master=p_overzicht_films)
 
@@ -423,10 +430,11 @@ reserve_btn = Button(master=p_overzicht_films, text='Zet op naam', command=zetop
 titel.grid(row=0, column=0, columnspan=2)
 listbox_movies.grid(row=1, column=0, rowspan=3, columnspan=2)
 
-movie_name.grid(row=0, column=2)
+p_movie_name.grid(row=0, column=2)
 p_movie_start.grid(row=0, column=3)
 p_movie_synops.grid(row=1, column=2, rowspan=3, columnspan=2)
 reserve_btn.grid(row=4, column=2)
+
 
 toonhomescreen()
 root.mainloop()
