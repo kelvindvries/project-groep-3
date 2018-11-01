@@ -188,13 +188,6 @@ def reservefilm():
     with open(p_bestand_reserved_opnaam, 'r')as ff:
         read_p = ff.readlines()
 
-    for i in read_p:
-        i.strip()
-        p_info, p_movie = i.split(';')
-        print(picked_movie, p_movie, p_info)
-        if picked_movie == p_movie:
-            name_of_provider.config(text=str(p_info))
-
     name_of_movie.config(text=str(movie_name.cget("text")))
     unique_code.config(text=str(unique))
     toonticket()
