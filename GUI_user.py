@@ -20,7 +20,6 @@ def toonhomescreen():
     p_menu.pack_forget()
     p_overzicht_films.pack_forget()
 
-
     home_screen.pack()
     print('home aanbieder / user')
 
@@ -71,9 +70,11 @@ def toonoverzichtfilms():
     overzicht_films.pack()
     print('film overzicht user')
 
+
 def toon_p_overzicht():
     p_menu.pack_forget()
     p_overzicht_films.pack()
+
 
 def toon_p_menu():
     login_provider.pack_forget()
@@ -100,6 +101,8 @@ def provider_login():
     else:
         print('Verkeerde gebruikersnaam!')
 
+    return p_name_email
+
 
 def signup_user():
     if signup_field.get() != '' and signup_field_email != '':
@@ -117,13 +120,21 @@ def provider_signup():
         print('kan geen waardes doorvoeren')
 
 
-def insert_title():
+def u_insert_title():
     with open(bestand, "r") as f:
         infile = csv.reader(f)
         for row in infile:
             text = row[0]
             title = text.split(";")[0]
             listbox_movies.insert(END, title)
+    return title
+
+
+def p_insert_title():
+    titles = movies_in_file()
+    for row in titles:
+        print(row)
+        listbox_movies.insert(END, row)
 
 
 def CurSelect(event):
@@ -148,22 +159,35 @@ def CurSelect(event):
 def reservefilm():
     curuser = login_user()
     picked_movie = movie_name.cget("text")
-    print(picked_movie)
 
     invoerstring = f'{curuser}{picked_movie}'
-    orderd = [ord(c) + 30 for c in invoerstring]
+    orderd = [ord(c) + 3 for c in invoerstring]
     karakter = [chr(d) for d in orderd]
     unique = ''.join(karakter)
 
-    writeline = f'{curuser};{picked_movie};{unique}\n'
-    if file_is_empty(bestand_reserved_movies):
-        f = open(bestand_reserved_movies, 'w+')
-        f.write(writeline)
+    if file_is_empty(u_bestand_reserved_movies):
+        f = open(u_bestand_reserved_movies, 'w')
+        f.write(f'{curuser};{picked_movie};{unique}\n')
         f.close()
 
     else:
-        ff = open(bestand_reserved_movies, 'a')
-        ff.write(writeline)
+        ff = open(u_bestand_reserved_movies, 'a')
+        ff.write(f'{curuser};{picked_movie};{unique}\n')
+        ff.close()
+
+
+def zetopnaam():
+    curuser = provider_login()
+    picked_movie = movie_name.cget("text")
+
+    if file_is_empty(p_bestand_reserved_movies):
+        f = open(p_bestand_reserved_movies, 'w+')
+        f.write(f'{curuser};{picked_movie}\n')
+        f.close()
+
+    else:
+        ff = open(p_bestand_reserved_movies, 'a')
+        ff.write(f'{curuser};{picked_movie}\n')
         ff.close()
 
 
@@ -256,7 +280,7 @@ titel = Label(master=overzicht_films,
               )
 
 listbox_movies = Listbox(master=overzicht_films, width=40)
-insert_title()
+u_insert_title()
 listbox_movies.bind('<<ListboxSelect>>', CurSelect)
 
 movie_name = Label(master=overzicht_films)
@@ -335,17 +359,13 @@ signup_accept.grid(row=0, column=2)
 p_menu = Frame(master=root)
 p_menu.pack(fill='both', expand=True)
 
-btn_toonoverzicht = Button(master=p_menu, text='Toon overzicht films',command=toon_p_overzicht)
+btn_toonoverzicht = Button(master=p_menu, text='Toon overzicht films', command=toon_p_overzicht)
 btn_toongereserveerdefilm = Button(master=p_menu, text='Mijn Films')
 btn_terug = Button(master=p_menu, text='Terug')
 
 btn_toonoverzicht.grid()
 btn_toongereserveerdefilm.grid()
 btn_terug.grid()
-
-def zetopnaam():
-
-
 
 # _________________________________________________________________________________________________________
 # Overzicht Films, film reserveren
@@ -359,14 +379,14 @@ titel = Label(master=p_overzicht_films,
               )
 
 listbox_movies = Listbox(master=p_overzicht_films, width=40)
-insert_title()
+p_insert_title()
 listbox_movies.bind('<<ListboxSelect>>', CurSelect)
 
 movie_name = Label(master=p_overzicht_films)
 movie_synops = Label(master=p_overzicht_films, width=50, wraplengt=300, justify=LEFT)
 movie_start = Label(master=p_overzicht_films)
 
-reserve_btn = Button(master=p_overzicht_films, text='Zet op naam')
+reserve_btn = Button(master=p_overzicht_films, text='Zet op naam', command=zetopnaam)
 
 # place
 titel.grid(row=0, column=0, columnspan=2)

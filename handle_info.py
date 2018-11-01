@@ -1,9 +1,47 @@
 # Example: This processes the value's given in the GUI in to a text file and checks entered value's from GUI
+import csv
 import os
+from API import *
 
 bestand_gebruiker = 'user_information.txt'
 bestand_aanbieder = 'aanbieder_information.txt'
-bestand_reserved_movies = 'gereserveerdefilms_gebruiker.txt'
+u_bestand_reserved_movies = 'gereserveerdefilms_gebruiker.txt'
+p_bestand_reserved_movies = 'filmsopnaam_provider.txt'
+
+
+
+
+def get_title_from_csv():
+    with open(bestand, "r") as f:
+        infile = csv.reader(f)
+        movies = []
+        for row in infile:
+            text = row[0]
+            title = text.split(";")[0]
+            movies.append(title)
+    return movies
+
+def get_title_from_file():
+    with open(p_bestand_reserved_movies, 'r')as f:
+        text = f.readlines()
+
+        titles = []
+        for row in text:
+            title = row.split(';')[1]
+            titles.append(title)
+
+    return titles
+
+def movies_in_file():
+    movie_from_csv = get_title_from_csv()
+    movie_from_file = get_title_from_file()
+    movie_to_print = []
+
+    for i in movie_from_csv:
+        movie_to_print.append(i)
+        if i in movie_from_file:
+            movie_to_print.remove(i)
+    return movie_to_print
 
 
 def file_is_empty(bestand):
