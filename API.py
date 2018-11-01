@@ -27,3 +27,6 @@ def get_movie_data():
 
             writer.writerow((title, synop, starttijd))
 
+
+
+

@@ -161,8 +161,9 @@ def CurSelect(event):
 
     movie_name.config(text=str(picked))
     movie_synops.config(text=str(synops))
+    p_movie_synops.config(text=str(synops))
     movie_start.config(text=str(starttime))
-
+    p_movie_start.config(text=str(synops))
 
 def reservefilm():
     curuser = login_user()
@@ -183,10 +184,6 @@ def reservefilm():
         ff = open(u_bestand_reserved_movies, 'a')
         ff.write(f'{curuser};{picked_movie};{unique}\n')
         ff.close()
-
-    #
-    with open(p_bestand_reserved_opnaam, 'r')as ff:
-        read_p = ff.readlines()
 
     name_of_movie.config(text=str(movie_name.cget("text")))
     unique_code.config(text=str(unique))
@@ -285,7 +282,7 @@ go_back_button.grid(row=1, column=2)
 signup_field_accept.grid(row=0, column=2)
 
 # _________________________________________________________________________________________________________
-# Overzicht van alle films
+# Overzicht van alle films voor gebruiker
 overzicht_films = Frame(master=root)
 overzicht_films.pack_propagate(0)
 overzicht_films.pack(fill="both", expand=True)
@@ -415,8 +412,8 @@ p_insert_title()
 listbox_movies.bind('<<ListboxSelect>>', CurSelect)
 
 movie_name = Label(master=p_overzicht_films)
-movie_synops = Label(master=p_overzicht_films, width=50, wraplengt=300, justify=LEFT)
-movie_start = Label(master=p_overzicht_films)
+p_movie_synops = Label(master=p_overzicht_films, width=50, wraplengt=300, justify=LEFT)
+p_movie_start = Label(master=p_overzicht_films)
 
 reserve_btn = Button(master=p_overzicht_films, text='Zet op naam', command=zetopnaam)
 
@@ -425,8 +422,8 @@ titel.grid(row=0, column=0, columnspan=2)
 listbox_movies.grid(row=1, column=0, rowspan=3, columnspan=2)
 
 movie_name.grid(row=0, column=2)
-movie_start.grid(row=0, column=3)
-movie_synops.grid(row=1, column=2, rowspan=3, columnspan=2)
+p_movie_start.grid(row=0, column=3)
+p_movie_synops.grid(row=1, column=2, rowspan=3, columnspan=2)
 reserve_btn.grid(row=4, column=2)
 
 toonhomescreen()
