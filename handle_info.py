@@ -1,10 +1,9 @@
 # Example: This processes the value's given in the GUI in to a text file and checks entered value's from GUI
-
-
 import os
 
 bestand_gebruiker = 'user_information.txt'
 bestand_aanbieder = 'aanbieder_information.txt'
+bestand_reserved_movies = 'gereserveerdefilms_gebruiker.txt'
 
 
 def file_is_empty(bestand):
@@ -57,6 +56,8 @@ def username_infile(user_input):
 def username_provider_infile(user_input):
     with open(bestand_aanbieder, 'r')as file:
         p_readlines = file.readlines()
+        print(user_input)
+        print(p_readlines)
 
     for p_elem in p_readlines:
         p_elem_mod = p_elem.strip()

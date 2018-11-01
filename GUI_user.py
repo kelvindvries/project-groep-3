@@ -7,13 +7,19 @@ import csv
 
 # Homescreen, hier is de keus tussen aanbieder of gebruiker
 def toonhomescreen():
+    # alle schermen die niet gezien moeten worden
+    # gebruiker
+    keuzescherm.pack_forget()
     signup_frame.pack_forget()
+    login_frame.pack_forget()
+    overzicht_films.pack_forget()
+    # aanbieder
     provider_choice_screen.pack_forget()
     login_provider.pack_forget()
     signup_provider.pack_forget()
-    login_frame.pack_forget()
-    keuzescherm.pack_forget()
-    overzicht_films.pack_forget()
+    p_menu.pack_forget()
+    p_overzicht_films.pack_forget()
+
 
     home_screen.pack()
     print('home aanbieder / user')
@@ -65,24 +71,32 @@ def toonoverzichtfilms():
     overzicht_films.pack()
     print('film overzicht user')
 
+def toon_p_overzicht():
+    p_menu.pack_forget()
+    p_overzicht_films.pack()
+
+def toon_p_menu():
+    login_provider.pack_forget()
+    signup_provider.pack_forget()
+    p_menu.pack()
+
 
 # Logic
 def login_user():
     name_email = f'{login_field.get()}{login_field_email.get()}'
+    currentuser = name_email
     if username_infile(name_email):
-        currentuser = username_infile(login_field.get())
-        print(currentuser)
         toonoverzichtfilms()
     else:
         print('Verkeerde gebruikersnaam!')
 
+    return currentuser
+
 
 def provider_login():
-    p_name_email = f'{p_login_entry_name}{p_login_entry_email}'
+    p_name_email = f'{p_login_entry_name.get()}{p_login_entry_email.get()}'
     if username_provider_infile(p_name_email):
-        currentprovider = username_provider_infile(provider_name.get())
-        print(currentprovider)
-        toonoverzichtfilms()
+        toon_p_menu()
     else:
         print('Verkeerde gebruikersnaam!')
 
@@ -96,8 +110,9 @@ def signup_user():
 
 
 def provider_signup():
-    if provider_name and provider_email != '':
-        handle_provider_signup(f'{provider_name.get()}{provider_email.get()}')
+    if provider_name != '' and provider_email != '':
+        handle_provider_signup(f'{provider_name.get()}{provider_email.get()}\n')
+        toonProviderChoiceScreen()
     else:
         print('kan geen waardes doorvoeren')
 
@@ -128,6 +143,28 @@ def CurSelect(event):
     movie_name.config(text=str(picked))
     movie_synops.config(text=str(synops))
     movie_start.config(text=str(starttime))
+
+
+def reservefilm():
+    curuser = login_user()
+    picked_movie = movie_name.cget("text")
+    print(picked_movie)
+
+    invoerstring = f'{curuser}{picked_movie}'
+    orderd = [ord(c) + 30 for c in invoerstring]
+    karakter = [chr(d) for d in orderd]
+    unique = ''.join(karakter)
+
+    writeline = f'{curuser};{picked_movie};{unique}\n'
+    if file_is_empty(bestand_reserved_movies):
+        f = open(bestand_reserved_movies, 'w+')
+        f.write(writeline)
+        f.close()
+
+    else:
+        ff = open(bestand_reserved_movies, 'a')
+        ff.write(writeline)
+        ff.close()
 
 
 # hierin komt alle opmaak van de tkinter te staan
@@ -226,7 +263,7 @@ movie_name = Label(master=overzicht_films)
 movie_synops = Label(master=overzicht_films, width=50, wraplengt=300, justify=LEFT)
 movie_start = Label(master=overzicht_films)
 
-reserve_btn = Button(master=overzicht_films, text='Reserveren')
+reserve_btn = Button(master=overzicht_films, text='Reserveren', command=reservefilm)
 
 # place
 titel.grid(row=0, column=0, columnspan=2)
@@ -295,11 +332,50 @@ signup_accept.grid(row=0, column=2)
 
 # _________________________________________________________________________________________________________
 # Menu, Toon gereserveerde films, toon overzicht films, terug naar homescreen
+p_menu = Frame(master=root)
+p_menu.pack(fill='both', expand=True)
+
+btn_toonoverzicht = Button(master=p_menu, text='Toon overzicht films',command=toon_p_overzicht)
+btn_toongereserveerdefilm = Button(master=p_menu, text='Mijn Films')
+btn_terug = Button(master=p_menu, text='Terug')
+
+btn_toonoverzicht.grid()
+btn_toongereserveerdefilm.grid()
+btn_terug.grid()
+
+def zetopnaam():
+
 
 
 # _________________________________________________________________________________________________________
 # Overzicht Films, film reserveren
+p_overzicht_films = Frame(master=root)
+p_overzicht_films.pack(fill='both', expand=True)
 
+titel = Label(master=p_overzicht_films,
+              text='Films die nog niet op naam staan',
+              font=('Helvetica', 12, 'bold italic'),
+              width=40
+              )
+
+listbox_movies = Listbox(master=p_overzicht_films, width=40)
+insert_title()
+listbox_movies.bind('<<ListboxSelect>>', CurSelect)
+
+movie_name = Label(master=p_overzicht_films)
+movie_synops = Label(master=p_overzicht_films, width=50, wraplengt=300, justify=LEFT)
+movie_start = Label(master=p_overzicht_films)
+
+reserve_btn = Button(master=p_overzicht_films, text='Zet op naam')
+
+# place
+titel.grid(row=0, column=0, columnspan=2)
+listbox_movies.grid(row=1, column=0, rowspan=3, columnspan=2)
+
+movie_name.grid(row=0, column=2)
+movie_start.grid(row=0, column=3)
+movie_synops.grid(row=1, column=2, rowspan=3, columnspan=2)
+reserve_btn.grid(row=4, column=2)
 
 toonhomescreen()
 root.mainloop()
