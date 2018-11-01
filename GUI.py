@@ -81,9 +81,10 @@ def toonticket():
 
 
 def toon_p_overzicht():
-    p_menu.pack_forget()
+    provider_choice_screen.pack_forget()
     login_provider.pack_forget()
     signup_provider.pack_forget()
+    p_menu.pack_forget()
 
     p_overzicht_films.pack()
     print('provider overzicht')
@@ -425,6 +426,7 @@ p_movie_synops = Label(master=p_overzicht_films, width=50, wraplengt=300, justif
 p_movie_start = Label(master=p_overzicht_films)
 
 reserve_btn = Button(master=p_overzicht_films, text='Zet op naam', command=zetopnaam)
+btn_back = Button(master=p_overzicht_films, text='<', command=toon_p_menu)
 
 # place
 titel.grid(row=0, column=0, columnspan=2)
@@ -434,7 +436,7 @@ p_movie_name.grid(row=0, column=2)
 p_movie_start.grid(row=0, column=3)
 p_movie_synops.grid(row=1, column=2, rowspan=3, columnspan=2)
 reserve_btn.grid(row=4, column=2)
-
+btn_back.grid(row=4, column=3)
 
 toonhomescreen()
 root.mainloop()
