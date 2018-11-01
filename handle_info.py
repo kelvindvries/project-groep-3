@@ -6,7 +6,7 @@ from API import *
 bestand_gebruiker = 'user_information.txt'
 bestand_aanbieder = 'aanbieder_information.txt'
 u_bestand_reserved_movies = 'gereserveerdefilms_gebruiker.txt'
-p_bestand_reserved_movies = 'filmsopnaam_provider.txt'
+p_bestand_reserved_opnaam = 'filmsopnaam_provider.txt'
 
 
 
@@ -22,7 +22,7 @@ def get_title_from_csv():
     return movies
 
 def get_title_from_file():
-    with open(p_bestand_reserved_movies, 'r')as f:
+    with open(p_bestand_reserved_opnaam, 'r')as f:
         text = f.readlines()
 
         titles = []
@@ -94,14 +94,11 @@ def username_infile(user_input):
 def username_provider_infile(user_input):
     with open(bestand_aanbieder, 'r')as file:
         p_readlines = file.readlines()
-        print(user_input)
-        print(p_readlines)
 
     for p_elem in p_readlines:
         p_elem_mod = p_elem.strip()
 
         if p_elem_mod == user_input:
-            print(p_elem_mod, user_input)
             print('overeenkomende username gevonden')
             return True
 

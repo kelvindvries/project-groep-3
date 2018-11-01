@@ -13,6 +13,7 @@ def toonhomescreen():
     signup_frame.pack_forget()
     login_frame.pack_forget()
     overzicht_films.pack_forget()
+    ticket.pack_forget()
     # aanbieder
     provider_choice_screen.pack_forget()
     login_provider.pack_forget()
@@ -71,9 +72,16 @@ def toonoverzichtfilms():
     print('film overzicht user')
 
 
+def toonticket():
+    overzicht_films.pack_forget()
+    ticket.pack()
+    print('ticket')
+
+
 def toon_p_overzicht():
     p_menu.pack_forget()
     p_overzicht_films.pack()
+    print('provider overzicht')
 
 
 def toon_p_menu():
@@ -85,13 +93,14 @@ def toon_p_menu():
 # Logic
 def login_user():
     name_email = f'{login_field.get()}{login_field_email.get()}'
-    currentuser = name_email
+    curuser = f'{login_field.get()}'
     if username_infile(name_email):
         toonoverzichtfilms()
     else:
         print('Verkeerde gebruikersnaam!')
 
-    return currentuser
+    name_of_user.config(text=str(curuser))
+    return name_email
 
 
 def provider_login():
@@ -133,7 +142,6 @@ def u_insert_title():
 def p_insert_title():
     titles = movies_in_file()
     for row in titles:
-        print(row)
         listbox_movies.insert(END, row)
 
 
@@ -160,33 +168,49 @@ def reservefilm():
     curuser = login_user()
     picked_movie = movie_name.cget("text")
 
+    # Creert unieke code
     invoerstring = f'{curuser}{picked_movie}'
     orderd = [ord(c) + 3 for c in invoerstring]
     karakter = [chr(d) for d in orderd]
     unique = ''.join(karakter)
 
+    # kijkt of het bestand leeg is
     if file_is_empty(u_bestand_reserved_movies):
         f = open(u_bestand_reserved_movies, 'w')
         f.write(f'{curuser};{picked_movie};{unique}\n')
         f.close()
-
     else:
         ff = open(u_bestand_reserved_movies, 'a')
         ff.write(f'{curuser};{picked_movie};{unique}\n')
         ff.close()
+
+    #
+    with open(p_bestand_reserved_opnaam, 'r')as ff:
+        read_p = ff.readlines()
+
+    for i in read_p:
+        i.strip()
+        p_info, p_movie = i.split(';')
+        print(picked_movie, p_movie, p_info)
+        if picked_movie == p_movie:
+            name_of_provider.config(text=str(p_info))
+
+    name_of_movie.config(text=str(movie_name.cget("text")))
+    unique_code.config(text=str(unique))
+    toonticket()
 
 
 def zetopnaam():
     curuser = provider_login()
     picked_movie = movie_name.cget("text")
 
-    if file_is_empty(p_bestand_reserved_movies):
-        f = open(p_bestand_reserved_movies, 'w+')
+    if file_is_empty(p_bestand_reserved_opnaam):
+        f = open(p_bestand_reserved_opnaam, 'w+')
         f.write(f'{curuser};{picked_movie}\n')
         f.close()
 
     else:
-        ff = open(p_bestand_reserved_movies, 'a')
+        ff = open(p_bestand_reserved_opnaam, 'a')
         ff.write(f'{curuser};{picked_movie}\n')
         ff.close()
 
@@ -297,6 +321,21 @@ movie_name.grid(row=0, column=2)
 movie_start.grid(row=0, column=3)
 movie_synops.grid(row=1, column=2, rowspan=3, columnspan=2)
 reserve_btn.grid(row=4, column=2)
+
+# _________________________________________________________________________________________________________
+# Ticket
+ticket = Frame(master=root)
+ticket.pack(fill='both', expand=True)
+
+name_of_user = Label(master=ticket)
+name_of_movie = Label(master=ticket)
+unique_code = Label(master=ticket)
+name_of_provider = Label(master=ticket)
+
+name_of_user.grid(row=0, column=0, columnspan=2)
+name_of_movie.grid(row=0, column=2, columnspan=2)
+unique_code.grid(row=1, column=2, columnspan=2)
+name_of_provider.grid(row=1, column=0, columnspan=2)
 
 # ___________________________________________Aanbieder GUI_________________________________________________
 # Keuze scherm aanbieder
