@@ -334,9 +334,11 @@ provider_choice_screen.pack(fill='both', expand=True)
 
 btn_login = Button(master=provider_choice_screen, text='Login', command=toonproviderlogin)
 btn_signup = Button(master=provider_choice_screen, text='Sign Up', command=toonprovidersignup)
+btn_naarhome = Button(master=provider_choice_screen, text='Home', command=toonhomescreen)
 
 btn_login.grid()
 btn_signup.grid()
+btn_naarhome.grid()
 
 # _________________________________________________________________________________________________________
 # Login voor aanbieder
@@ -390,7 +392,7 @@ p_menu.pack(fill='both', expand=True)
 
 btn_toonoverzicht = Button(master=p_menu, text='Toon overzicht films', command=toon_p_overzicht)
 btn_toongereserveerdefilm = Button(master=p_menu, text='Mijn Films')
-btn_terug = Button(master=p_menu, text='Terug')
+btn_terug = Button(master=p_menu, text='Terug', command=toonProviderChoiceScreen())
 
 btn_toonoverzicht.grid()
 btn_toongereserveerdefilm.grid()
